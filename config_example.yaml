@@ -1,0 +1,10 @@
+samples:
+    sampleA: /path/to/sampleA/alignment.bam
+    sampleB: /path/to/sampleB/alignment.bam
+    sampleC: /path/to/sampleC/alignment.bam
+
+genome:
+    /path/to/database/genome.fa.gz
+
+windowsize:
+    500
