@@ -88,6 +88,7 @@ rule bamslicebed:
 rule windowed_insertion_excess:
     input:
         bam = "alignment_sliced/{sample}-{chromosome}.bam",
+        bai = "alignment_sliced/{sample}-{chromosome}.bam.bai",
         bed = "utils/windows.bed",
     output:
         "insertion_excess/{sample}-{chromosome}.ie"
