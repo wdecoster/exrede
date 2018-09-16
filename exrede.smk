@@ -59,7 +59,7 @@ rule samtools_index:
     input:
         "{dir}/{sample}.bam"
     output:
-        "{dir}/{sample}.bam.bai"
+        temp("{dir}/{sample}.bam.bai")
     threads: 4
     log:
         "logs/samtools_index/{sample}.log"
