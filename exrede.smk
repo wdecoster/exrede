@@ -78,10 +78,11 @@ rule bamslicebed:
         "logs/bamslicedbed/{sample}-{chromosome}.log"
     params:
         chrom = "{chromosome}"
+    threads: 8
     shell:
         """
         bamslicebed -B <(grep ^{params.chrom} {input.bed}) {input.bam} | \
-         samtools sort -o {output} 2> {log}
+         samtools sort -@ {threads} -o {output} 2> {log}
         """
 
 rule windowed_insertion_excess:
