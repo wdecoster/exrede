@@ -73,7 +73,7 @@ rule bamslicebed:
         bam = "alignment/{sample}-{chromosome}.bam",
         bai = "alignment/{sample}-{chromosome}.bam.bai",
     output:
-        "alignment_sliced/{sample}-{chromosome}.bam",
+        temp("alignment_sliced/{sample}-{chromosome}.bam"),
     log:
         "logs/bamslicedbed/{sample}-{chromosome}.log"
     params:
