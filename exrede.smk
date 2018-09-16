@@ -102,9 +102,22 @@ rule windowed_insertion_excess:
         """
 
 
+rule select_outliers:
+    input:
+        "insertion_excess/{sample}-{chromosome}.ie"
+    output:
+        "insertion_outliers/{sample}-{chromosome}.ie"
+    log:
+        "logs/insertion_outliers/{sample}-{chromosome}.log"
+    shell:
+        """
+        python insertion-excess-outliers.py {input} > {output} 2> {log}
+        """
+
+
 rule combine_chromosomes:
     input:
-        expand("insertion_excess/{{sample}}-{chromosome}.ie",
+        expand("insertion_outliers/{{sample}}-{chromosome}.ie",
                chromosome=CHROMOSOMES)
     output:
         "success-{sample}.txt"
