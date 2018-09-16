@@ -57,9 +57,9 @@ rule samtools_split:
 
 rule samtools_index:
     input:
-        "alignment/{sample}.bam"
+        "{dir}/{sample}.bam"
     output:
-        "alignment/{sample}.bam.bai"
+        "{dir}/{sample}.bam.bai"
     threads: 4
     log:
         "logs/samtools_index/{sample}.log"
