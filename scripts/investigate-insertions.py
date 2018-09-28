@@ -73,6 +73,7 @@ def estimate_ploidy(reads, coverage):
 
 
 def get_inserted_sequence(reads):
+    pass
 
 
 if __name__ == '__main__':
