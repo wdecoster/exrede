@@ -50,13 +50,14 @@ def get_reads(bam, locus):
     """Return all primary alignments contributing to the insertion event
 
     Parses cigartuples, entry[0] = operation, entry[1] is length
+    operation 1 == insertion, operation 4 == softclips
     Arbitrary cutoff of minimal insertion length = 50
     """
     reads_involved = []
     for read in bam.fetch(*locus.tup):
         if read.mapping_quality > 0:
             for entry in read.cigartuples:
-                if entry[0] == 1 and entry[1] > 50:
+                if entry[0] in [1, 4] and entry[1] > 50:
                     reads_involved.append(read)
                     break
     return reads_involved
