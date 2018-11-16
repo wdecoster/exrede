@@ -18,16 +18,16 @@ def get_insertion_excess(cigar):
     """Return excess insertions over deletions.
 
     Using pysam cigartuples
-    sum all insertions (operation 1)
+    sum all insertions and softclips (operation 1 and 4)
     minus sum of all deletions (operation 2)
     """
-    return sum([l for o, l in cigar if o == 1]) - sum([l for o, l in cigar if o == 2])
+    return sum([l for o, l in cigar if o in [1, 4]]) - sum([l for o, l in cigar if o == 2])
 
 
 def get_args():
-    parser = ArgumentParser(description="count intertion excess per bin")
+    parser = ArgumentParser(description="count insertion excess per bin")
     parser.add_argument("bam", help="bam as created by jvarkit bamslicebed")
-    parser.add_argument("bed", help="bam as used by jvarkit bamslicebed")
+    parser.add_argument("bed", help="bed with windows")
     return parser.parse_args()
 
 
