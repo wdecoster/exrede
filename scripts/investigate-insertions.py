@@ -29,8 +29,8 @@ def main():
         var = Insertion(locusstring, excess)
         median_coverage = get_coverage(args.bam, var.locus)
         reads_involved = get_reads(bam, var.locus)
-        var.genotype = estimate_ploidy(len(reads_involved), median_coverage)
-        get_inserted_sequence(reads_involved)
+        var.ploidy = estimate_ploidy(len(reads_involved), median_coverage)
+        seq = [get_inserted_sequence(read) for read in reads_involved]
 
 
 def get_args():
@@ -73,8 +73,14 @@ def estimate_ploidy(reads, coverage):
         return './.'
 
 
-def get_inserted_sequence(reads):
-    pass
+def get_inserted_sequence(read):
+    position = 0
+    seq = []
+    for o, l in read.cigartuples:
+        if (o == 1 and l > 5) or (o == 4 and l > 50):
+            seq.append(read.query_sequence[position:position + l])
+        position += l
+    return ''.join(seq)
 
 
 if __name__ == '__main__':
