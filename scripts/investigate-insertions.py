@@ -76,10 +76,11 @@ def estimate_ploidy(reads, coverage):
 def get_inserted_sequence(read):
     position = 0
     seq = []
-    for o, l in read.cigartuples:
-        if (o == 1 and l > 5) or (o == 4 and l > 50):
-            seq.append(read.query_sequence[position:position + l])
-        position += l
+    for operation, length in read.cigartuples:
+        if (operation == 1 and length > 5) or (operation == 4 and length > 50):
+            seq.append(read.query_sequence[position:position + length])
+        if not operation == 2:
+            position += length
     return ''.join(seq)
 
 
