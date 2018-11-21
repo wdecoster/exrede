@@ -49,15 +49,15 @@ def get_coverage(bam, locus):
 def get_reads(bam, locus):
     """Return all primary alignments contributing to the insertion event
 
-    Parses cigartuples, entry[0] = operation, entry[1] is length
-    operation 1 == insertion, operation 4 == softclips
+    Parses cigartuples
+    operation 1 == insertion, operation 4 == softclipped
     Arbitrary cutoff of minimal insertion length = 50 and minimal softclip = 100
     """
     reads_involved = []
     for read in bam.fetch(*locus.tup):
         if read.mapping_quality > 0:
-            for entry in read.cigartuples:
-                if (entry[0] == 1 and entry[1] > 50) or (entry[0] == 4 and entry[1] > 100):
+            for operation, length in read.cigartuples:
+                if (operation == 1 and length > 50) or (operation == 4 and length > 100):
                     reads_involved.append(read)
                     break
     return reads_involved
